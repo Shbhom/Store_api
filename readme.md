@@ -105,6 +105,4 @@ To access most of the routes, you need to be authenticated with a valid token. T
 
 The `verifyUser` middleware ensures that only authenticated users can access protected routes. If the token is invalid or not provided, the middleware will return a 401 Unauthorized error, prompting the user to log in again.
 
-Please note that some routes may require additional permissions (e.g., admin access) for certain actions.
-
 Happy shopping! 🛍️
