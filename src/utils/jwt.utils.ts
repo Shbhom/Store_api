@@ -1,30 +1,31 @@
 import "dotenv/config"
 import jwt from "jsonwebtoken"
-import { User } from "@prisma/client"
+import { user } from "@prisma/client"
 
 const privateKey = process.env.PRIVATE_KEY as string
 const publicKey = process.env.PUBLIC_KEY as string
 
-export interface userPayload {
-    //@ts-ignore
-    user: User
+export type userPayload = {
+    user: user
 }
-export interface userIdPayload {
-    //@ts-ignore
-    userId: String
+export type userIdPayload = {
+    userId: string
 }
-export function signJwt(payload: userIdPayload | userPayload, expiryTime: string) {
+
+export function signJwt(payload: userIdPayload | userPayload, expiryTime: string): string {
     return jwt.sign(payload, privateKey,
         {
             algorithm: "RS256", expiresIn: expiryTime
         })
 }
-export function verfiyJwt(token: string) {
+
+
+export function verifyJwt(token: string): { decode: userPayload | userIdPayload | null, expired: Boolean } {
     try {
         const decode = jwt.verify(token, publicKey,
             {
                 algorithms: ["RS256"]
-            })
+            }) as userPayload | userIdPayload
         return {
             decode, expired: false
         }
