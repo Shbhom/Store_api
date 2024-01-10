@@ -21,7 +21,7 @@ model user {
 model sneaker {
   id            String                @id @default(uuid())
   title         String
-  description   String
+  description   String?
   Brand         String
   category      String
   Gender        String

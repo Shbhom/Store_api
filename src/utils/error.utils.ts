@@ -11,9 +11,12 @@ export class CustomError extends Error {
     }
 }
 
-export function errorHandler(err: CustomError, _: Request, res: Response) {
-    return res.status(err.statusCode).json({
-        message: err.message,
-        statusCode: err.statusCode
+export function errorHandler(err: CustomError | TypeError, _: Request, res: Response) {
+    let customErr = err
+    if (!(err instanceof CustomError)) {
+        customErr = new CustomError(err.message, 500)
+    }
+    return res.status((customErr as CustomError).statusCode).json({
+        message: customErr.message
     })
 }
