@@ -1,5 +1,5 @@
 import { createUserInput, loginInput } from "./auth.dto";
-import { db } from "../../prisma/db";
+import { db } from "../db";
 import { hasPass } from "./auth.utils";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt"

@@ -1,4 +1,4 @@
-import { db } from "../../prisma/db";
+import { db } from "../db";
 import { createProductInput } from "./product.dto";
 
 export async function createProduct(input: createProductInput) {

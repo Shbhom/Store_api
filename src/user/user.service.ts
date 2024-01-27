@@ -1,4 +1,4 @@
-import { db } from "../../prisma/db"
+import { db } from "../db"
 import { user } from "@prisma/client"
 import { CustomError } from "../utils/error.utils"
 import { updateUserInput } from "./user.dto"

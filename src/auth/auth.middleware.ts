@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyJwt, userIdPayload, userPayload } from "../utils/jwt.utils";
-import { db } from "../../prisma/db";
+import { db } from "../db";
 import { getUserJWT } from "./auth.utils";
 import { CustomError } from "../utils/error.utils";
 
@@ -16,7 +16,7 @@ export async function verifyUser(req: Request, res: Response, next: NextFunction
     }
     const { decode: refreshDecode, expired: refreshExpired } = accessExpired && refreshToken ? verifyJwt(refreshToken) : { decode: null, expired: true }
     if (refreshDecode) {
-        const user = await db.user.findUnique({ where: { id: (refreshDecode as userIdPayload).userId },include:{cart:true} })
+        const user = await db.user.findUnique({ where: { id: (refreshDecode as userIdPayload).userId }, include: { cart: true } })
         if (!user) {
             throw new CustomError("no user found", 404)
         }
