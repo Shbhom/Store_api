@@ -29,7 +29,6 @@ export async function loginController(req: Request, res: Response, next: NextFun
             throw user
         }
         const { accessToken, refreshToken } = getUserJWT(user)
-        console.log({ accessToken, refreshToken })
         res.cookie("accessToken", accessToken, { httpOnly: true, secure: true, maxAge: 15 * 60 * 1000 })
         res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, maxAge: 2 * 24 * 60 * 60 * 1000 })
         return res.status(200).json({

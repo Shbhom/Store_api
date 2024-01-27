@@ -8,7 +8,6 @@ import { CustomError } from "../utils/error.utils";
 
 export async function verifyUser(req: Request, res: Response, next: NextFunction) {
     const { accessToken, refreshToken } = req.cookies
-    console.log(req.cookies)
     const { decode: accessDecode, expired: accessExpired } = accessToken ? verifyJwt(accessToken) : { decode: null, expired: true }
     if (accessDecode) {
         req.user = (accessDecode as userPayload).user

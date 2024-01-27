@@ -1,13 +1,13 @@
 import { createUserInput, loginInput } from "./auth.dto";
 import { db } from "../db";
-import { hasPass } from "./auth.utils";
+import { hashPass } from "./auth.utils";
 import { user } from "@prisma/client";
 import bcrypt from "bcrypt"
 import { CustomError } from "../utils/error.utils";
 
 export async function createUser(input: createUserInput): Promise<user | CustomError> {
     try {
-        const hash = await hasPass(input.password)
+        const hash = await hashPass(input.password)
         input.password = hash
         const user = await db.user.create({ data: { ...input } })
         const cart = user ? await db.cart.create({ data: { "userId": user.id } }) : new CustomError("no user created", 500)

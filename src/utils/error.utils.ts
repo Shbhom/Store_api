@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express"
+import { ZodError } from "zod"
 export class CustomError extends Error {
     statusCode: number
     constructor(message: string, statusCode: number) {
@@ -11,7 +12,7 @@ export class CustomError extends Error {
     }
 }
 
-export function errorHandler(err: CustomError | TypeError, _: Request, res: Response) {
+export function errorHandler(err: CustomError | TypeError | ZodError, _: Request, res: Response) {
     let customErr = err
     if (!(err instanceof CustomError)) {
         customErr = new CustomError(err.message, 500)
